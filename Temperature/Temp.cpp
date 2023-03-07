@@ -4,59 +4,49 @@
 
 #include "temps.h"
 #include <stdio.h>
-void print_line(int stars,int min){
+void print_line(int stars,int min,char x){
 	// which is bigger
-	int end = (stars>0) ? stars : 0;
-	for (int i=min;(i<=end);i++){
-		//consecutive no_values 
-		if (stars == no_value){
-			goto novalue;
-		}
-		if (i>0){
-			printf("*");
-		}	
-		if ((i<stars)&&(i<0)){
-			printf(" ");
-		}
-		if (i>stars){
-			printf("*");
-		}
-		novalue:
-		if (i==0){
-			printf("|");
-		}	
+	//int end = (stars>0) ? stars : 0;
+	for (int i=min;(i<=0);i++){
+		 
+		
 	}
 	printf("\n");
 	return;
 }
 
-int find_min(const int array[],int len)
-{
-	int min=0;
+int find_min(const int array[],int len){
+	int minimum=0;
 	for (int i=0;i!=len;i++){
-		if ((array[i]<min) && (array[i]!=no_value)){
-			min = array[i];
+		if ((array[i]<minimum) && (array[i]!=no_value)){
+			minimum = array[i];
 		}
 	}
-	return min;
-}	
+	return minimum;
+}
+
+void replace(int array[], int len) {
+	int last = 0;
+	for (int i = 0; i != len; i++) {
+		if (array[i] == no_value) {
+			array[i] = last;
+		}else {
+			last = array[i];
+		}
+	}
+}
 
 int main(int argc, char **argv)
 {
 	//size of array
 	int size_of_array = sizeof(temperatures) / sizeof(temperatures[0]);
 	//find minimum of array
-	int min = find_min(temperatures,size_of_array);
-	//last valid
-	int last = 0;
+	constexpr min = find_min(temperatures,size_of_array);
+	//replace no_value
+	replace(temperatures,size_of_array);
 	//prints the result
 	for (int i=0;i<size_of_array;i++){
-		if (temperatures[i]==no_value){
-			print_line(temperatures[last],min);
-		}else{
-			print_line(temperatures[i],min);
-			last = i;
-		}	
+		
 	}
 	return 0;
 }
